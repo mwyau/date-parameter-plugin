@@ -51,9 +51,9 @@ public class StringLocalDateValueTest {
     public void string_is_java_format() {
         StringLocalDateValue value0 = new StringLocalDateValue("LocalDate.now()", "yyyyMMdd");
         StringLocalDateValue value1 = new StringLocalDateValue("LocalDate.now().plusDays(1);", "yyyyMMdd");
-        StringLocalDateValue value2 = new StringLocalDateValue("LocalDate.now().plusDays(1);", "yyyyMMdd");
-        StringLocalDateValue value3 = new StringLocalDateValue("LocalDate.now().plusMonths(5);", "yyyyMMdd");
-        StringLocalDateValue value4 = new StringLocalDateValue("LocalDate.now().minusDays(1).plusMonths(5);", "yyyyMMdd");
+        StringLocalDateValue value2 = new StringLocalDateValue("LocalDate.now().plusMonths(5);", "yyyyMMdd");
+        StringLocalDateValue value3 = new StringLocalDateValue("LocalDate.now().minusDays(1).plusMonths(5);", "yyyyMMdd");
+        StringLocalDateValue value4 = new StringLocalDateValue("LocalDate.now().withDayOfMonth(1);", "yyyyMMdd");
 
         Assert.assertTrue(value0.isJavaFormat());
         Assert.assertTrue(value1.isJavaFormat());
@@ -102,6 +102,12 @@ public class StringLocalDateValueTest {
     }
 
     @Test
+    public void string_parse_java_single_with_method() {
+        StringLocalDateValue value = new StringLocalDateValue("LocalDate.now().withDayOfMonth(1);", "yyyyMMdd");
+        Assert.assertEquals(DateTimeFormat.forPattern("yyyyMMdd").print(LocalDate.now().withDayOfMonth(1)), value.getValue());
+    }
+
+    @Test
     public void string_parse_java_multiple_plus_methods() {
         StringLocalDateValue value = new StringLocalDateValue("LocalDate.now().plusDays(10).plusYears(1)", "yyyyMMdd");
         Assert.assertEquals(DateTimeFormat.forPattern("yyyyMMdd").print(LocalDate.now().plusDays(10).plusYears(1)), value.getValue());
@@ -137,6 +143,12 @@ public class StringLocalDateValueTest {
     public void string_parse_java_time_single_minus_method_wit_semicolon() {
         StringLocalDateValue value = new StringLocalDateValue("LocalDateTime.now().minusYears(1);", "yyyy-MM-dd HH:mm:ss");
         Assert.assertEquals(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").print(LocalDateTime.now().minusYears(1)), value.getValue());
+    }
+
+    @Test
+    public void string_parse_java_time_single_with_method() {
+        StringLocalDateValue value = new StringLocalDateValue("LocalDateTime.now().withDayOfMonth(1);", "yyyy-MM-dd HH:mm:ss");
+        Assert.assertEquals(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").print(LocalDateTime.now().withDayOfMonth(1)), value.getValue());
     }
 
     @Test
@@ -197,6 +209,12 @@ public class StringLocalDateValueTest {
     public void string_parse_java_time_multi_field2() {
         StringLocalDateValue value = new StringLocalDateValue("LocalDateTime.now().minusMinutes(22).plusMonths(3).plusHours(9)", "yyyy-MM-dd HH:mm:ss");
         Assert.assertEquals(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").print(LocalDateTime.now().minusMinutes(22).plusMonths(3).plusHours(9)), value.getValue());
+    }
+
+    @Test
+    public void string_parse_java_time_multi_field3() {
+        StringLocalDateValue value = new StringLocalDateValue("LocalDateTime.now().withDayOfMonth(10).minusMinutes(2).plusMonths(4).plusHours(5)", "yyyy-MM-dd HH:mm:ss");
+        Assert.assertEquals(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss").print(LocalDateTime.now().withDayOfMonth(10).minusMinutes(2).plusMonths(4).plusHours(5)), value.getValue());
     }
 
 }
