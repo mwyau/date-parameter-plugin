@@ -21,7 +21,7 @@ public class StringLocalDateValue implements Serializable {
 
     private static final long serialVersionUID = 8295455815421939737L;
 
-    private static final String JAVA_PATTERN = "^LocalDate(Time)?\\.now\\(\\)(\\.(plus|minus)(Seconds|Minutes|Hours|Days|Months|Years)\\([0-9]+\\))*;?$";
+    private static final String JAVA_PATTERN = "^LocalDate(Time)?\\.now\\(\\)((\\.(plus|minus)(Seconds|Minutes|Hours|Days|Months|Years)\\([0-9]+\\))|(\\.with(DayOfMonth|DayOfYear|Month|Year)\\([0-9]+\\)))*;?$";
 
     private final String stringLocalDate;
 
